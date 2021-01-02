@@ -1,0 +1,73 @@
+{% extends 'MoocmsBundle::layout.html.twig' %}
+
+{% block title %}Liste des tutoriels{% endblock %}
+
+  {% block body %}
+
+    <div class="container page-content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-default">
+            <div class="card-header">
+              <h2>Liste des tutoriels</h2>
+            </div>
+            <div class="card-body">
+          {% if lessons %}
+            <table class="table table-hover table-striped table-bordered">
+              <thead align="center">
+                {# <th>Id</th> #}
+                <th>Intitulé</th>
+                <th>Finalité</th>
+                <th>Discipline</th>
+                <th>Formateur</th>
+                <th colspan="2">Statut</th>
+                <th colspan="3">Actions</th>
+                {# <th>Promouvoir</th> #}                
+                {# <th>Aperçu</th>
+                <th>Modifier</th>
+                <th>Suivre</th>
+                <th>Publié</th> #}
+              </thead>
+              {% for lesson in lessons %}
+                <tr>
+                  {# <td>{{ lesson.id }}</td> #}
+                  <td>{{ lesson.name }}</td>
+                  <td>{{ lesson.summary|truncate(50, true, '...') }}</td>
+                  <td>{% if lesson.topic %}{{ lesson.topic.name }}{% endif %}</td>
+                  <td>{{ lesson.user.firstname|truncate(1,false,'.') ~ ' ' ~ lesson.user.lastname }}</td>
+                  <td align="center" title="Statut">
+                    {%if lesson.published == true %} 
+                      <i class="fa fa-check"></i>
+                    {% endif %}
+                    {%if lesson.promote == true %} 
+                      <i class="fas fa-ad"></i>
+                    {% endif %}
+                    {% if lesson.published == false and lesson.promote == false %} 
+                      <i class="fa fa-cogs"></i>
+                    {% endif %}
+                  </td>
+                  <td align="center"><a title="Aperçu" href="{{ path('moocms_preview_lesson', {'id': lesson.id}) }}"><i class="fa fa-eye"></i></a></td>
+                  <td align="center"><a title="Modifier" href="{{ path('moocms_edit_lesson', {'id': lesson.id}) }}"><i class="fa fa-edit"></i></a></td>
+                  <td align="center"><a title="Démarrer" href="{{ path('moocms_follow_lesson', {'id': lesson.id}) }}"><i class="fa fa-play-circle"></i></a></td>
+                  
+                </tr>
+              {% endfor %}
+            </table>
+          {% else %}
+            <p><b>No lessons match...</b></p>
+          {% endif %}
+          </div>
+          <div class="card-footer">
+
+          <div class="form-group">
+            <a class="btn btn-primary" href="{{ path('moocms_add_lesson') }}" ><i class="fa fa-plus-square"></i> Ajouter un tutoriel</a>
+          </div>
+
+        </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}

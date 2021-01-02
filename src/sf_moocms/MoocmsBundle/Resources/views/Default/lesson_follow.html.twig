@@ -1,0 +1,51 @@
+{% extends 'MoocmsBundle::layout.html.twig' %}
+
+{% block title %}Suivre la leçon{% endblock %}
+
+  {% block body %}
+
+    <div class="container page-content">
+      {# <h1>Suivre la leçon</h1> #}
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-default">
+            <div class="card-header __main_title">
+              <h1>{{ lesson.name }}</h1>
+            </div>
+            <div class="card-body">
+              <h1 class="__title">Objectif général</h1>
+              <p>{{ lesson.summary }}</p>
+
+              <h1 class="__title">Plan du cours</h1>
+              
+              {% if sequencesList %}
+                <ol>
+                  {% for sequence in sequencesList %}
+
+                    <li>{{ sequence.title }}</li>
+                  {% endfor %}
+                </ol>
+              {% else %}
+                <div >
+                  <p class="alert-info"><b>Aucune séquence trouvée!..</b></p>
+                </div>
+              {% endif %}
+              
+            </div>
+            <div class="card-footer">
+              {% if sequencesList %}
+                <div class="form-group">
+                  <a class="btn btn-success" href="{{ path('moocms_show_lesson_sequence',{'id' : lesson.id,'snum' : 1 }) }}">Commencer le cours</a>
+                </div>
+              {% endif %}
+              <div class="form-group">
+                <button class="btn btn-default" onclick="history.go(-1)">Retour</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  {% endblock %}

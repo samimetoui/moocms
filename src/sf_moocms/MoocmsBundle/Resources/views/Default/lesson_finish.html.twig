@@ -1,0 +1,34 @@
+{% extends 'MoocmsBundle::layout.html.twig' %}
+
+{% block title %}Fin de du Tutoriel{% endblock %}
+
+  {% block body %}
+
+    <div class="container page-content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-default">
+            <div class="card-header __main_title">
+              <h1>{{ lesson.name }}</h1>
+            </div>
+            <div class="card-body">
+              <p align="center" style="font-size:125px; color: #D7DF01;" class="finish-trophy"><i class="fa fa-trophy"></i></p>
+              <p align="center" style="font-size:25px;">Félicitation!</p>
+              <p align="center"> Vous venez de terminer le tutoriel sur <b>"{{ lesson.name }} ". </b></p>
+            </div>
+            <div class="card-footer">
+
+              <div class="form-group">
+                <div class="col-sm-12 col-md-6 offset-md-3 col-lg-6 offset-lg-3">              
+
+                  <a class="btn btn-success btn-block" href="{{ path('moocms_homepage') }}">Terminer</a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  {% endblock %}

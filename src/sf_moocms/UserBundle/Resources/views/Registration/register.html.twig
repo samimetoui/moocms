@@ -1,0 +1,19 @@
+{% extends "UserBundle::layout_reg.html.twig" %}
+
+
+
+{% block fos_user_content %}
+
+<div class="container">
+  <div class="col-lg-8 col-md-8 offset-2">
+    <div class="card" >
+      <div class="card-header">
+        <h2 class="card-title">Enregistrez-vous!</h2>
+      </div>
+      <div class="card-body">
+        {% include "UserBundle:Registration:register_content.html.twig" %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock fos_user_content %}

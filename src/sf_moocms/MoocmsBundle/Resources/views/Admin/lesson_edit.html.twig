@@ -1,0 +1,216 @@
+{% extends 'MoocmsBundle::layout.html.twig' %}
+
+{% block title %}Home page{% endblock %}
+
+  {% block body %}
+
+    <div class="container page-content">      
+      <div class="row">
+        <div class="col-md-12">
+
+          {{ form_start(form, {'attr': {'class': 'form-horizontal'} }) }}
+
+          <div class="card card-default">
+            <div class="card-header">
+              <h2>Modifier le tutoriel</h2>
+            </div>
+            <div class="card-body">
+
+              <div class="col-md-2 dida-img">
+
+                {% if lesson.image != null  and lesson.image.url != null %}
+
+                  <img src="{{ '/uploads_img/' ~ lesson.image.url }}" class="card-img-top">
+
+                {% endif %}
+              </div>
+
+              <div class="col-md-12">                
+
+                <div class="form-group">
+                  {{ form_label(form.image, 'Image') }}
+                  {{ form_errors(form.image) }}
+                  {{ form_widget(form.image, { 'attr':  {'class': 'form-control-file'}}) }} 
+                </div>
+
+                <div class="form-group">
+                  {{ form_label(form.name, 'Intitulé') }}            
+                  {{ form_errors(form.name) }}
+                  {{ form_widget(form.name, { 'attr':  {'class': 'form-control'}}) }} 
+                </div>
+
+                <div class="form-group">
+                  {{ form_label(form.level, 'Niveau') }}            
+                  {{ form_errors(form.level) }}
+                  {{ form_widget(form.level, { 'attr':  {'class': 'form-control'}}) }} 
+                </div>
+
+                <div class="form-group">
+                  {{ form_label(form.summary, 'Finalité') }}            
+                  {{ form_errors(form.summary) }}
+                  {{ form_widget(form.summary, { 'attr':  { 'class': 'form-control', 'rows' : '5', 'resize' : 'none' }}) }}
+                </div>
+
+                <div class="form-group">
+                  {{ form_label(form.topic, 'Discipline') }}            
+                  {{ form_errors(form.topic) }}
+                  {{ form_widget(form.topic, { 'attr':  {'class': 'form-control'}}) }} 
+                </div>
+
+                <dig class="form-group">
+                  {{ form_label(form.categories, 'Catégories') }}
+                  {{ form_errors(form.categories) }}
+                  {{ form_widget(form.categories, { 'attr':  {'class': 'form-control select2'}}) }}
+                </dig>
+
+                {% if is_granted("ROLE_SUPER_ADMIN") %}
+
+                  <div class="form-check">           
+                    {{ form_errors(form.promote) }}
+                    {{ form_widget(form.promote, { 'attr':  { 'class': 'form-check-input' }}) }}
+                    {{ form_label(form.promote, 'Promouvoir', { 'attr':  { 'class': 'form-check-label' }}) }} 
+                  </div>
+
+                  <div class="form-check">           
+                    {{ form_errors(form.published) }}
+                    {{ form_widget(form.published, { 'attr':  { 'class': 'form-check-input' }}) }}
+                    {{ form_label(form.published, 'Publier', { 'attr':  { 'class': 'form-check-label' }}) }} 
+                  </div>
+
+                {% else %}
+
+                  {{ form_widget(form.published, { 'attr':  { 'hidden': 'true' }}) }}
+                  {{ form_widget(form.promote, { 'attr':  { 'hidden': 'true' }}) }}
+
+                {% endif %}                
+
+                <div class="form-group">
+                  <a href="#" id="advClick"><i class="fa fa-plus"></i> Vue avancée</a>
+                </div>
+
+                <div id="advSlide">
+
+                  <div class="form-group">
+                    {{ form_label(form.prerequisite, 'Prérequis') }}            
+                    {{ form_errors(form.prerequisite) }}
+                    {{ form_widget(form.prerequisite, { 'attr':  { 'class': 'form-control', 'rows' : '3', 'resize' : 'none' }}) }}
+                  </div>
+
+                  <div class="form-group">
+                    {{ form_label(form.goals, 'Objectifs') }}            
+                    {{ form_errors(form.goals) }}
+                    {{ form_widget(form.goals, { 'attr':  { 'class': 'form-control', 'rows' : '3', 'resize' : 'none' }}) }}
+                  </div>
+
+                  <div class="form-group">
+                    {{ form_label(form.behaviours, 'Objectifs comportementaux') }}            
+                    {{ form_errors(form.behaviours) }}
+                    {{ form_widget(form.behaviours, { 'attr':  { 'class': 'form-control', 'rows' : '3', 'resize' : 'none' }}) }}
+                  </div>
+
+                  <div class="form-group">
+                    {{ form_label(form.purposes, 'Finalités') }}            
+                    {{ form_errors(form.purposes) }}
+                    {{ form_widget(form.purposes, { 'attr':  { 'class': 'form-control', 'rows' : '3', 'resize' : 'none' }}) }}
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="col-md-12">
+
+                <h2>Séquences de la leçon:</h2>
+                {% if listSequences %}
+                  <table class="table table-hover table-bordered table-sm">
+                    <thead align="center">
+                      <th>#</th>
+                      <th>Titre</th>
+                      <th>Résume</th>
+                      <th>Modifier</th>
+                    </thead>
+                    {% for sequence in listSequences %}
+                      <tr>
+                        <td>{{ sequence.number }}</td>
+                        <td>{{ sequence.title }}</td>
+                        <td>{{ sequence.summary|truncate(50, true, '...') }}</td>
+                        <td align="center"><a href="{{ path('moocms_edit_sequence', {'id': sequence.id}) }}"><i class="fa fa-edit"></i></a></td>
+                      </tr>
+                    {% endfor %}
+                  </table>
+                {% else %}
+                  <div >
+                    <p class="alert alert-info"><b>Pas de sequences trouvées...</b></p>
+                  </div>
+                {% endif %}
+
+                <div class="form-group">
+                  <a class="btn btn-primary" href="{{ path('moocms_add_sequence', {'id' : id} ) }}"><i class="fa fa-plus-square"></i> Ajouter une séquence</a>
+                </div>
+
+                <div class="form-group">
+                  {{ form_label(form.activity, "Choix de l'activité pédagogique (Synthèse du tutoriel)") }}            
+                  {{ form_errors(form.activity) }}
+                  {{ form_widget(form.activity, { 'attr':  {'class': 'form-control'}}) }} 
+                </div>
+
+                {# <div class="form-group">
+                  <label>Choix de l'activité pédagogique (Synthèse du tutoriel)</label>
+                  <select name="activity" class="form-control" >
+                    <option value="{{ lesson.activity.id }}">{{ lesson.activity.title }}</option>
+                    <option value="">Pas d'activité</option>
+                    {% for activity in activities %}
+                      <option value="{{ activity.id }}">{{ activity.title }}</option>
+                    {% endfor %}
+                  </select>
+                </div> #}
+
+                <div class="form-group">
+                  <a class="btn btn-primary" href="{{ path('moocms_lesson_add_activity', {'lid' : id} ) }}"><i class="fa fa-plus-square"></i> Ajouter une nouvelle activité</a>
+                </div>
+
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="col-md-12">
+
+                <div class="form-group">
+                  <button class="btn btn-primary" type="submit">Enregistrer</button>
+                  <a class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete" data-href="{{ path("moocms_remove_lesson", {id: lesson.id}) }}">Supprimer la leçon</a>
+                  <a class="btn btn-success" href="{{ path("moocms_export_lesson", {id: lesson.id}) }}">Exporter</a>
+                  <a class="btn btn-secondary" href="{{ path('moocms_list_lessons') }}" role="button">Quitter</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {{ form_rest(form) }}
+          {{ form_end(form) }}
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal deletion confirmation -->
+    <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            Suppression de la leçon
+          </div>
+          <div class="modal-body">
+            Etes-vous sure de vouloir supprimer la leçon?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+            <a class="btn btn-danger btn-ok" href="{{ path("moocms_remove_lesson", {id: lesson.id}) }}">Supprimer</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+
+  {% endblock %}
+
+

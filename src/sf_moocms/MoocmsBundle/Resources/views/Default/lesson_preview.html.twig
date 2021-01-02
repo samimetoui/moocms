@@ -1,0 +1,78 @@
+{% extends 'MoocmsBundle::layout.html.twig' %}
+
+{% block title %}Résumé du tutoriel{% endblock %}
+
+  {% block body %}
+
+    <div class="container page-content">
+      <div class="card">
+        <div class="card-header __main_title">
+          <h1>{{ lesson.name }}</h1>
+        </div>
+        <div class="card-body">
+          <div class="row">                    
+
+            <div class="col-md-10">
+              {% if lesson %}
+
+                <h1 class="__title">Objectif général</h1>
+                <p>{{ lesson.summary }}</p>
+                <h1 class="__title">Discipline</h1>
+                <p>{{ lesson.topic.name }}</p>
+                <h1 style="display: inline;" class="__title">Difficulté : </h1>&nbsp;&nbsp;<p style="display: inline;">
+
+                  {% if lesson.level == 0 %}
+                    Non défini 
+                  {% elseif lesson.level == 1 %}
+                    <i style="font-size:24px" class="fa fa-thermometer-empty" data-toggle="tooltip" data-placement="right" title="Facile!"></i>
+                  {% elseif lesson.level == 2 %}
+                    <i style="font-size:24px" class="fa fa-thermometer-half" data-toggle="tooltip" data-placement="right" title="Intermédiaire!"></i>
+                  {% elseif lesson.level == 3 %}
+                   <i style="font-size:24px" class="fa fa-thermometer-three-quarters" data-toggle="tooltip" data-placement="right" title="Avancé!"></i>
+                 {% elseif lesson.level == 4 %}
+                   <i style="font-size:24px" class="fa fa-thermometer-full" data-toggle="tooltip" data-placement="right" title="Expert!"></i>
+                 {% else %}
+                  Erreur
+                }
+              {% endif %}
+            </p>
+
+            
+            <h1 class="__title">Formateur</h1>
+            <p style="display: inline;">{{ lesson.user.firstname }} {{ lesson.user.lastname }}</p>
+          {% else %}
+            <p>Aucune information trouvée!</p>
+          {% endif %}
+        </div>
+
+        <div class="col-md-2">
+              <div class="card">
+                <div class="card-img" align="center"> 
+                  {% if lesson.image and lesson.image.url %}
+                    <div class="img"></div>
+                    <img src="{{ '../../uploads_img/' ~ lesson.image.url }}" class="img-fluid">
+                  {% else %}
+                    <img src="{{ '/icon-lesson.png' }}" class="card-img-top"  class="img-fluid" alt="...">
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <button class="btn btn-default" onclick="history.go(-1)">Retour</button>
+            {% if lesson.published == true %}
+              <a href="{{ path('moocms_follow_lesson', {'id': lesson.id}) }}" class="btn btn-primary">Suivre</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

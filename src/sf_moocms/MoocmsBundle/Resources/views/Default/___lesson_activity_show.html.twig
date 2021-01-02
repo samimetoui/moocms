@@ -1,0 +1,49 @@
+{% extends 'MoocmsBundle::layout.html.twig' %}
+
+{% block title %}Home page{% endblock %}
+
+  {% block body %}
+
+   <div class="container page-content">
+    <h1>Activité pédagogique</h1>
+    <div class="row">
+
+      <div class="col-md-12">
+
+        <p><strong>Intitulé :</strong></p>
+        <p> {{ activity.title }}</p>
+
+        <p><strong>Résumé :</strong></p>
+        <p> {{ activity.summary }}</p>
+
+        <p><strong>Objectif :</strong></p>
+        <p> {{ activity.goals }}</p>
+
+        <p><strong>Catégorie :</strong></p>
+        <p> {{ activity.category }}</p>
+
+        <p><strong>Contenu :</strong></p>
+        <p> {{ activity.content | raw }}</p>
+
+        {% if activity.document != null  and activity.document.url != null %}
+          
+          <i class="fa fa-file"></i> {{ activity.document.alt }}
+          <a class="btn btn-default" target="_blank" href="/uploads_doc/{{ activity.document.url }}"><i class="fa fa-eye"></i></a>
+
+        {% endif %}        
+
+      </div>
+
+      <div class="col-md-10">
+        <div class="form-group">
+          <a class="btn btn-primary" role="button" href="{{ path('moocms_homepage') }}">Terminer</a>
+        </div>
+        
+      </div>
+
+    </div>
+  </div>
+
+
+
+{% endblock %}

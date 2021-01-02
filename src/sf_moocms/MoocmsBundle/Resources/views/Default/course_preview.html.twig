@@ -1,0 +1,75 @@
+{% extends 'MoocmsBundle::layout.html.twig' %}
+
+{% block title %}Résumé de la formation{% endblock %}
+
+  {% block body %}
+
+    <div class="container page-content">
+      <div class="card">
+        <div class="card-header __main_title">
+          <h1>{{ course.title }}</h1>
+        </div>
+        <div class="card-body">
+          <div class="row">
+
+            <div class="col-md-10">
+              {% if course %}
+                <h1 class="__title">Objectif général</h1>
+                <p>{{ course.summary }}</p>
+                <h1 class="__title">Discipline</h1>
+                <p>{{ course.topic.name }}</p>
+                <h1 class="__title">Formateur</h1>
+                <p>{{ course.user.firstname }} {{ course.user.lastname }}</p>
+              {% else %}
+                <p>Aucune information trouvée!</p>
+              {% endif %}
+            </div>
+
+            <div class="col-md-2">
+              <div class="card">
+                <div class="card-img" align="center"> 
+                  {% if course.image and course.image.url %}
+                    <div class="img"></div>
+                    <img src="{{ '../../uploads_img/' ~ course.image.url }}" class="img-fluid">
+                  {% else %}
+                    <img src="{{ '/icon-lesson.png' }}" class="card-img-top" class="img-fluid">
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h1 class="__title">Contenu de la formation</h1>
+              {% if courseLessons %}            
+
+                <ol>
+                  {% for clesson in courseLessons %}
+                    <li>{{ clesson.lesson.name }}</li>
+
+                  {% endfor %}
+                </ol>
+                
+              {% else %}
+                <div class="alert alert-danger">Pas de tutoriels trouvés!..</div>
+              {% endif %}
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <button class="btn btn-default" onclick="history.go(-1)">Retour</button>
+                {# {% if course.published == true %} #}
+                  <a href="{{ path('moocms_follow_course', {'id': course.id}) }}" class="btn btn-primary">Suivre</a>
+                {# {% endif %} #}
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  {% endblock %}

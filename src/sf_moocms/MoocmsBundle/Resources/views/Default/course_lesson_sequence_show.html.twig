@@ -1,0 +1,124 @@
+{% extends 'MoocmsBundle::layout.html.twig' %}
+
+{% block title %}{{ course.title ~ '-' ~ lesson.name }}{% endblock %}
+
+  {% block body %}
+
+    <div class="container page-content">
+
+      <div class="row">
+
+        <div class="col-md-12 tutorial-progress" align="center">         
+
+          <a class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Début" href="{{ path('moocms_follow_lesson',{'id' : lesson.id }) }}"><i class="fa fa-home"></i></a>
+
+          {% for seq in sequencesList %}
+
+            {% if sequence.number >= seq.number %}
+
+              <span class="hbar-progress" style="font-weight:800;color:green;">&ndash;</span>
+              <a class="btn btn-success" data-toggle="tooltip" data-placement="top" title="{{ seq.title }}" href="{{ path('moocms_show_course_lesson_sequence',{'cid' : course.id, 'lid' : lesson.id, 'snum' : seq.number }) }}">{{ seq.number }}</a>
+
+            {% else %}
+              <span class="hbar-progress" style="font-weight:800;">&ndash;</span>
+
+              <a class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="{{ seq.title }}" href="{{ path('moocms_show_course_lesson_sequence',{'cid' : course.id, 'lid' : lesson.id, 'snum' : seq.number }) }}">{{ seq.number }}</a>
+
+            {% endif %}
+
+          {% endfor %}
+
+          <span class="hbar-progress" style="font-weight:800;">&ndash;</span>
+
+          <a class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Fin" href="{{ path('moocms_finish_course_lesson',{'cid' : course.id, 'lid' : lesson.id }) }}"><i class="fa fa-trophy"></i></a>
+
+        </div>
+
+
+        <div class="col-md-12">
+          <div class="card card-default">
+            <div class="card-header __main_title">          
+              <h1>{{ lesson.name }} : {{ sequence.title }}</h1>
+            </div>
+            <div class="card-body">
+              <h1 class="__title">Objectif de la séquence</h1>    
+
+              {% if sequence.number == 1 %}
+                <p>{{ lesson.summary }}</p>
+              {% endif %}
+
+              <p>{{ sequence.summary | nl2br }}</p>
+
+              <h1 class="__title">{{ sequence.title }}</h1>
+
+              <div class="form-group sequence">
+                {{ sequence.content | raw }}
+              </div>
+            </div>
+            <div class="card-footer">
+
+              {# <div class="col-lg-12"> #}
+              <div class="row">
+                <div class="col-lg-6"> 
+                  <div class="form-group">
+                    {% if sequence.number > 1 %}            
+                      <a class="btn btn-primary btn-block" href="{{ path('moocms_show_course_lesson_sequence',{'cid' : course.id, 'lid' : lesson.id, 'snum' : sequence.number - 1 }) }}"><i class="fa fa-angle-double-left"></i> {{ sequencesList[sequence.number-2].title|truncate(20, true, '...') }}</a>
+                    {% endif %}
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="form-group">
+
+                    {% if sequence.activity %}                 
+                      <a class="btn btn-warning btn-block" href="{{ path('moocms_show_course_sequence_activity',{'cid' : course.id, 'lid' : lesson.id, 'snum' : sequence.number, 'id' : sequence.activity.id }) }}">Activité : {{ sequence.activity.title }}</a>
+                    {% endif %}
+
+
+                    {% if sequence.number < nbSeq %}            
+                      <a class="btn btn-success btn-block" href="{{ path('moocms_show_course_lesson_sequence',{'cid' : course.id, 'lid' : lesson.id, 'snum' : sequence.number + 1}) }}">{{ sequencesList[sequence.number].title|truncate(20, true, '...') }} <i class="fa fa-angle-double-right"></i></a>            
+                    {% else %}
+
+                      {# Il s'agit de la dernière séquence de la leçon #}
+                      {% if lesson.activity %}                 
+                        <a class="btn btn-danger btn-block" href="{{ path('moocms_show_course_lesson_activity',{'cid' : course.id, 'lid' : lesson.id,'id' : lesson.activity.id }) }}">Activité finale : {{ lesson.activity.title }}</a>
+
+                      {% endif %}
+                      
+                      <a class="btn btn-success btn-block" href="{{ path('moocms_finish_course_lesson',{'cid' : course.id, 'lid' : lesson.id}) }}">Terminer</a>
+                      {# <a class="btn btn-success btn-block" href="{{ path('moocms_follow_course',{'id' : course.id }) }}">Terminer</a>                                             #}
+
+                    {% endif %}
+                  </div> 
+                </div>
+              </div>
+              {# </div> #}
+              <div class="row">
+
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <a href="{{ path('moocms_follow_course',{'id' : course.id}) }}">Quitter</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {# <div class="col-md-3">
+          <div>
+            <div>          
+              <h2>Plan de la leçon</h2>
+            </div>
+            <ul class="list-group">
+              {% for seq in sequencesList %}
+                <li class="list-group-item list-group-item-action"><a href="{{ path('moocms_show_course_lesson_sequence',{'cid' : course.id, 'lid' : lesson.id, 'snum' : seq.number }) }}">{{ seq.number }} - {{ seq.title }}</a></li>
+              {% endfor %}
+            </ul> 
+          </div>
+        </div> #}
+      </div>
+    </div>
+
+  {% endblock %}

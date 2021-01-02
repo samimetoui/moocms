@@ -1,0 +1,54 @@
+{% extends 'MoocmsBundle::layout.html.twig' %}
+
+{% block title %}Liste des formations{% endblock %}
+
+  {% block body %}
+
+    <div class="container page-content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-default">
+            <div class="card-header">
+              <h2>Liste des formations</h2>
+            </div>
+            <div class="card-body">
+              {% if courses %}
+                <table class="table table-hover table-striped table-bordered">
+                  <thead align="center">
+                    {# <th>Id</th> #}
+                    <th>Titre</th>
+                    <th>Finalité</th>
+                    <th>Formateur</th>
+                {# <th>Promouvoir</th>
+                <th>Publié</th> #}
+                <th colspan="3">Actions</th>
+              </thead>
+              {% for course in courses %}
+                <tr>
+                  {# <td>{{ lesson.id }}</td> #}
+                  <td>{{ course.title }}</td>
+                  <td>{{ course.summary|truncate(50, true, '...') }}</td>
+                  <td>{{ course.user.firstname|truncate(1,false,'.') ~ ' ' ~ course.user.lastname }}</td>
+                  {# <td align="center">{{ lesson.promote == true ? '<i class="fa fa-bullhorn"></i>' : '<i class="fa fa-ban"></i>' }}</td>
+                  <td align="center">{{ lesson.published == true ? '<i class="fa fa-check"></i>' : '<i class="fa fa-cogs"></i>' }}</td> #}
+                  <td align="center"><a title="Aperçu" href="{{ path('moocms_preview_course', {'id': course.id}) }}"><i class="fa fa-eye"></i></a></td>
+                  <td align="center"><a title="Modifier" href="{{ path('moocms_edit_course', {'id': course.id}) }}"><i class="fa fa-edit"></i></a></td>
+                  <td align="center"><a title="Démarrer" href="{{ path('moocms_follow_course', {'id': course.id}) }}"><i class="fa fa-play-circle"></i></a></td>
+                </tr>
+              {% endfor %}
+            </table>
+          {% else %}
+            <p><b>No courses match...</b></p>
+          {% endif %}
+        </div>
+        <div class="card-footer">
+          <div class="form-group">
+            <a class="btn btn-primary" href="{{ path('moocms_add_course') }}" ><i class="fa fa-plus-square"></i> Ajouter une formation</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'MoocmsBundle::layout.html.twig' %}
+
+{% block body %}
+
+    <div class="container page-content">
+        <div class="row">
+
+            <div class="col-md-12">
+                {{ form_start(form) }}
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h1>Edition Utilisateur</h1>
+                    </div>
+                    <div class="card-body">                    
+
+                        <div class="form-group">
+                            {{ form_label(form.firstname, 'Prénom') }}            
+                            {{ form_errors(form.firstname) }}
+                            {{ form_widget(form.firstname, { 'attr':  {'class': 'form-control'}}) }} 
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.lastname, 'Nom') }}            
+                            {{ form_errors(form.lastname) }}
+                            {{ form_widget(form.lastname, { 'attr':  {'class': 'form-control'}}) }} 
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.username, "Nom d'utilisateur") }}            
+                            {{ form_errors(form.username) }}
+                            {{ form_widget(form.username, { 'attr':  {'class': 'form-control'}}) }} 
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.email, 'E-mail') }}            
+                            {{ form_errors(form.email) }}
+                            {{ form_widget(form.email, { 'attr':  {'class': 'form-control'}}) }} 
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.roles, 'Droits') }}            
+                            {{ form_errors(form.roles) }}
+                            {{ form_widget(form.roles, { 'attr':  {'class': 'select2 form-control'}}) }} 
+                        </div>
+
+                        {# {{ form_widget(form) }} #}
+                        <input class="btn btn-success" type="submit" value="Modifier" />
+                        {{ form_end(form) }}
+
+                        <a class="btn btn-danger" href="{{ path('moocms_users') }}">Annuler</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+{% endblock %}

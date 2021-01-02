@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<title> {% block title %}{% endblock %} - Lab3216</title>
+
+
+		<link href="https://fonts.googleapis.com/css?family=Coda&display=swap" rel="stylesheet">
+		{# <link href="https://fonts.googleapis.com/css?family=Coda:400,800&display=swap" rel="stylesheet"> #}
+
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+
+
+		{% block stylesheets  %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+
+		<link rel="icon" type="image/x-icon" href="{{ asset('icone-2.png') }}"/>
+		{# <link rel="stylesheet" href="{{ asset('js/highlight/styles/a11y-dark.css') }}"> #}
+
+		{# <script src="{{ asset('js/highlight/highlight.pack.js') }}"></script> #}
+		{# <script>
+			hljs.initHighlightingOnLoad();
+		</script> #}	
+
+	</head>
+	<body>
+		<nav class="navbar navbar-toggleable-md fixed-top navbar-expand-lg navbar-dark bg-dark" id="navbar">
+			<div class="container">
+				<a class="navbar-brand" href="{{ path('moocms_homepage') }}"><img height="60" src="{{ asset('build/logo3216.png')}}"></a>
+				<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span></button>
+
+				<div class="collapse navbar-collapse" id="navbarNav">
+
+					{% block navigation %}
+						<ul class="nav navbar-nav ml-auto">
+							<li class="nav-item {{ app.request.attributes.get('_route') == 'moocms_homepage' ? 'active' }}">
+								<a class="nav-link" href="{{ path('moocms_homepage') }}">Tutoriels
+									<span class="sr-only">(current)</span>
+								</a>
+							</li>
+							<li class="nav-item {{ app.request.attributes.get('_route') == 'moocms_courses' ? 'active' }}">
+								<a class="nav-link" href="{{ path('moocms_courses') }}">Formations<span class="sr-only">(current)</span>
+								</a>
+							</li>
+							{# <li class="nav-item {{ app.request.attributes.get('_route') == 'moocms_about' ? 'active' }}"><a class="nav-link " href="{{ path('moocms_about') }}">À propos</a></li> #}
+							{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+								{% if is_granted("ROLE_SUPER_ADMIN") %}
+									{# Admin user #}
+									<li class="nav-item dropdown">
+										<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Admin<span class="caret"></span>
+										</a>
+										<ul class="dropdown-menu">
+											<li><a class="dropdown-item" href="{{ path('moocms_list_courses') }}">Formations</a></li>
+											<li><a class="dropdown-item" href="{{ path('moocms_list_lessons') }}">Tutoriels</a></li>
+											<li><a class="dropdown-item" href="{{ path('moocms_activities') }}">Activités</a></li>
+											<li><div class="dropdown-divider"></div></li>
+											<li><a class="dropdown-item" href="{{ path('moocms_users') }}">Utilisateurs</a></li>
+											<li><div class="dropdown-divider"></div></li>
+											<li><a class="dropdown-item" href="{{ path('moocms_topics') }}">Disciplines</a></li>
+											<li><a class="dropdown-item" href="{{ path('moocms_categories') }}">Catégories</a></li>
+										</ul>
+									</li>
+								{% elseif is_granted("ROLE_ADMIN") %}
+									{# Trainer user #}
+									<li class="nav-item dropdown">
+										<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Mon Admin<span class="caret"></span>
+										</a>
+										<ul class="dropdown-menu">
+											<li><a class="dropdown-item" href="{{ path('moocms_list_courses') }}">Mes formation</a></li>
+											<li><a class="dropdown-item" href="{{ path('moocms_list_lessons') }}">Mes tutoriels</a></li>
+											<li><a class="dropdown-item" href="{{ path('moocms_activities') }}">Mes activités</a></li>
+											{# <li><a class="dropdown-item" href="#">Mes évaluations</a></li> #}
+											{# <li><a class="dropdown-item" href="#">...</a></li> #}
+										</ul>
+									</li>
+									{% else %}
+									{# Student user #}
+								{% endif %}
+								{# <li class="nav-item {{ app.request.attributes.get('_route') == 'moocms_dashboard' ? 'active' }}"><a class="nav-link" href="{{ path('moocms_dashboard') }}">Dashboard</a></li> #}
+								<li class="nav-item">
+									<a class="btn btn-outline-secondary" href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out"></i>Déconnecter</a>
+										</li>
+							{% else %}
+								<li class="nav-item">
+									<a class="btn btn-outline-secondary" href="{{ path('fos_user_registration_register') }}"><i class="fa fa-user"></i>S'inscrire</a>
+								</li>
+								<li class="nav-item">
+									<a class="btn btn-secondary navbar-btn" href="{{ path('fos_user_security_login') }}"><i class="fa fa-sign-in"></i>Connecter</a>
+								</li>
+							{% endif %}
+							{# <li class="nav-item {{ app.request.attributes.get('_route') == 'moocms_forum' ? 'active' }}"><a class="nav-link" href="{{ path('moocms_forum') }}">Forum</a></li> #}
+						</ul>
+					{% endblock %}
+
+				</div>
+			</div>
+		</nav>
+
+		{% block body %}{% endblock %}
+
+		{# <!-- Footer -->
+		<footer class="py-5 bg-dark">
+			<div class="container">
+				<p class="m-0 text-center text-white">Copyright &copy; Lab3216 - 2018</p>
+			</div>
+			<!-- /.container -->
+		</footer> #}
+
+		<footer class="py-5 bg-dark">
+			<!-- Footer Links -->
+			<div class="container-fluid text-center text-md-left">
+				<!-- Grid row -->
+				<div class="row">
+					<!-- Grid column -->
+					<div class="col-md-6 mt-md-0 mt-3">
+						<!-- Content -->
+						<h5 class="text-white">Lab3216</h5>
+						<p class="text-white">Lab3216 pour apprendre et pratiquer les technplogies de l'information et des communications</p>
+					</div>
+					<!-- Grid column -->
+					<hr class="clearfix w-100 d-md-none pb-3">
+					<!-- Grid column -->
+					<div class="col-md-3 mb-md-0 mb-3">
+						<!-- Links -->
+						<h5 class="text-white">A propos</h5>
+						<ul class="list-unstyled">
+							<li>
+								<a href="#!">Qui sommes nous?</a>
+							</li>
+							<li>
+								<a href="#!">Contact</a>
+							</li>
+						</ul>
+					</div>
+					<!-- Grid column -->
+					<div class="col-md-3 mb-md-0 mb-3">
+						<!-- Links -->
+						<h5 class="text-white">En plus</h5>
+						<ul class="list-unstyled">
+							<li>
+								<a href="https://forum.lab3216.com" target="_blank">Forum</a>
+							</li>
+							<li>
+								<a href="#!">Conditions générales</a>
+							</li>
+							<li>
+								<a href="#!">Politique de Protection des données personnelles</a>
+							</li>
+						</ul>
+					</div>
+					<!-- Grid column -->
+				</div>
+				<!-- Grid row -->
+			</div>
+			<!-- Footer Links -->
+			<!-- Copyright -->
+			<div class="footer-copyright text-white text-center py-3">© 2018 Copyright <a href="https://www.lab3216.com"> lab3216.com</a>
+			</div>
+			<!-- Copyright -->
+		</footer>
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+
+		<!-- Matomo -->
+		<script type="text/javascript">
+			var _paq = _paq || [];
+			/* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+			_paq.push(['trackPageView']);
+			_paq.push(['enableLinkTracking']);
+			(function () {
+				var u = "//piwik.chaqal.com/";
+				_paq.push([
+					'setTrackerUrl',
+					u + 'piwik.php'
+					]);
+				_paq.push(['setSiteId', '3']);
+				var d = document,
+				g = d.createElement('script'),
+				s = d.getElementsByTagName('script')[0];
+				g.type = 'text/javascript';
+				g.async = true;
+				g.defer = true;
+				g.src = u + 'piwik.js';
+				s.parentNode.insertBefore(g, s);
+			})();
+		</script>
+		<!-- End Matomo Code -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-43594408-6"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
+			gtag('config', 'UA-43594408-6');
+		</script>
+
+
+		<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css"/>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+		<script>
+			window.addEventListener("load", function () {
+				window.cookieconsent.initialise({
+					"palette": {
+						"popup": {
+							"background": "#000"
+						},
+						"button": {
+							"background": "#f1d600"
+						}
+					},
+					"theme": "classic",
+					"content": {
+						"message": "Notre site web utilise des cookies, afin d’améliorer votre expérience en tant qu’utilisateur. ",
+						"dismiss": "Accepter!",
+						"link": "En savoir plus"
+					}
+				})
+			});
+		</script>
+
+		<script>
+			var prevScrollpos = window.pageYOffset;
+			window.onscroll = function () {
+				var currentScrollPos = window.pageYOffset;
+				if (prevScrollpos > currentScrollPos) {
+					document.getElementById("navbar").style.top = "0";
+				} else {
+					document.getElementById("navbar").style.top = "-83px";
+				} prevScrollpos = currentScrollPos;
+			};
+		</script>
+
+		{# <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/popper.min.js"></script> #}
+		{# <script src="{{ asset('tether/tether.js')}}"></script> #}
+
+		<script>
+			$('#confirm-delete').on('show.bs.modal', function (e) {
+				$(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+			});
+			$(document).ready(function () {
+				jQuery('#advSlide').hide();
+				$('#advClick').click(function () {
+					if ($("#advSlide").is(":hidden")) {
+						$('#advClick').html('<i class="fa fa-minus"></i> Réduire');
+					} else {
+						$('#advClick').html('<i class="fa fa-plus"></i> Vue avancée')
+					}
+					$('#advSlide').slideToggle();
+				});
+			});
+			$('.dropdown-toggle').dropdown();
+		</script>
+
+		<script type="text/javascript">
+			$(function () {
+				$('[data-toggle="tooltip"]').tooltip()
+			});
+		</script>
+	
+
+		
+	</body>
+</html>
+<!-- if($('#advClick'))
+  $('#advSlide').slideToggle(); -->

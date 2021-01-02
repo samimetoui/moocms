@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+
+        <title>{% block title %}Welcome!{% endblock %}</title>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        {# <link rel="stylesheet" type="text/css" href="{{ asset('ressources/css/style_login.css') }}"> #}
+        <link rel="stylesheet" type="text/css" href="{{ asset('ressources/font-awesome/css/font-awesome.css') }}">
+
+        {% block stylesheets %}
+            {# {% stylesheets 'bundles/user/main/css/style_login.css' %}
+                <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+            {% endstylesheets %} #}
+        {% endblock %}
+
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+    </head>
+
+    <body class="text-center">
+
+        {% block body %}{% endblock %}
+
+        {% block javascripts %}{% endblock %}
+
+    </body>
+    
+</html>

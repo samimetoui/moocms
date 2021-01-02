@@ -1,0 +1,4 @@
+"symfony/asset": "^4.2",
+
+"tilleuls/ckeditor-sonata-media-bundle": "^1.0",
+*****"friendsofsymfony/ckeditor-bundle": "^2.1",

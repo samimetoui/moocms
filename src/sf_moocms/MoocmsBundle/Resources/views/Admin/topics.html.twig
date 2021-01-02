@@ -1,0 +1,45 @@
+{% extends 'MoocmsBundle::layout.html.twig' %}
+
+{% block title %}Liste des disciplines{% endblock %}
+
+  {% block body %}
+
+    <div class="container page-content">      
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-default">
+            <div class="card-header">
+              <h2>Liste des disciplines</h2>
+            </div>
+            <div class="card-body">
+              {% if topics %}
+                <table class="table table-hover table-striped table-bordered">
+                  <thead align="center">
+                    <th>Intitulé</th>
+                    <th>Description</th>
+                    <th>Modifier</th>
+                  </thead>
+                  {% for topic in topics %}
+                    <tr>
+                      <td>{{ topic.name }}</td>
+                      <td>{{ topic.description }}</td>
+                      <td align="center"><a title="Modifier" href="{{ path('moocms_edit_topic', {'id': topic.id}) }}"><i class="fa fa-edit"></i></a></td>
+                    </tr>
+                  {% endfor %}
+                </table>
+              {% else %}
+                <p><b>No topics match...</b></p>
+              {% endif %}
+            </div>
+            <div class="card-footer">
+
+              <div class="form-group">
+                <a class="btn btn-primary" href="{{ path('moocms_add_topic') }}" ><i class="fa fa-plus-square"></i> Ajouter une discipline</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  {% endblock %}

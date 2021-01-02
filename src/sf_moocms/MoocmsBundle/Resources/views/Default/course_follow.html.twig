@@ -1,0 +1,61 @@
+{% extends 'MoocmsBundle::layout.html.twig' %}
+
+{% block title %}Suivre le cours{% endblock %}
+
+  {% block body %}
+
+    <div class="container page-content">
+      {# <h1>Suivre le cours</h1> #}
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-default">
+            <div class="card-header __main_title">
+              <h1>{{ course.title }}</h1>
+            </div>
+            <div class="card-body">
+              <h1 class="__title">Objectif général</h1>
+              <p>{{ course.summary }}</p>
+
+              <h1 class="__title">Contenu de la formation</h1>
+              
+              {% if courseLessonsList %}
+                <table class="table table-hover">
+                  {# <thead>
+                    <th>Nom de la leçon</th>
+                    <th>Action</th>                    
+                  </thead> #}
+                  <tbody>
+                    {% for clesson in courseLessonsList %}
+                      <tr>
+                        <td><b>{{ clesson.lesson.name }}</b></td>
+                        <td>{{ clesson.lesson.summary|truncate(50, true, '...') }}</td>
+                        <td><a href="{{ path('moocms_follow_course_lesson',{'cid' : course.id,'lid': clesson.lesson.id })}}"><i class="fa fa-play-circle"></a></td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              {% else %}
+                <div >
+                  <p class="alert-info"><b>Aucun tutoriel trouvé!..</b></p>
+                </div>
+              {% endif %}
+              
+            </div>
+            <div class="card-footer">
+              {% if courseLessonsList %}
+                <div class="form-group">
+                  <a class="btn btn-success" href="{{ path('moocms_follow_course_lesson',{'cid' : course.id,'lid' : courseLessonsList[0].lesson.id }) }}">Commencer la formation</a>
+                </div>
+              {% endif %}
+              <div class="form-group">
+                <button class="btn btn-default" onclick="history.go(-1)">Retour</button>
+                <a href="{{ path('moocms_courses') }}">Quitter</a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  {% endblock %}

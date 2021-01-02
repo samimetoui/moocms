@@ -1,0 +1,115 @@
+{% extends 'MoocmsBundle::layout.html.twig' %}
+
+{% block title %}Modifier une activité{% endblock %}
+
+  {% block body %}
+
+    <div class="container page-content">
+      <div class="row">
+        <div class="col-md-12">
+
+          {{ form_start(form, {'attr': {'class': 'form-horizontal'} }) }}
+
+          <div class="card card-default">
+            <div class="card-header">
+              <h2>Modifier une activité</h2>
+            </div>
+            <div class="card-body">
+
+              <div class="form-group">
+                {{ form_label(form.title, 'Intitulé') }}
+                {{ form_errors(form.title) }}
+                {{ form_widget(form.title, { 'attr':  {'class': 'form-control'}}) }}
+              </div>
+
+              <div class="form-group">
+                {{ form_label(form.summary, 'Résumé') }}
+                {{ form_errors(form.summary) }}
+                {{ form_widget(form.summary, { 'attr':  { 'class': 'form-control', 'rows' : '3', 'resize' : 'none' }}) }}
+              </div>
+
+              {# <div class="form-group">
+                <a href="#" id="advClick"><i class="fa fa-plus"></i> Vue avancée</a>
+              </div> #}
+
+              {# <div id="advSlide"> #}
+
+              <div class="form-group">
+                {{ form_label(form.goals, 'Objectifs') }}
+                {{ form_errors(form.goals) }}
+                {{ form_widget(form.goals, { 'attr':  { 'class': 'form-control', 'rows' : '3', 'resize' : 'none' }}) }}
+              </div>
+
+              <div class="form-group">
+                {{ form_label(form.category, 'Catégorie') }}
+                {{ form_errors(form.category) }}
+                {{ form_widget(form.category, { 'attr':  {'class': 'form-control'}}) }}
+              </div>
+
+              {# </div> #}
+
+              {# <div class="col-md-8"> #}
+              {% if activity.document != null  and activity.document.url != null %}
+
+                <p><i class="fa fa-file"></i> {{ activity.document.alt }}</p>
+                <a class="btn btn-primary" target="_blank" href="/uploads_doc/{{ activity.document.url }}"><i class="fa fa-eye"></i></a>
+
+              {% endif %}
+              {# </div> #}
+
+
+              <div class="form-group">
+                {{ form_label(form.document, 'Document joint') }}
+                {{ form_errors(form.document) }}
+                {{ form_widget(form.document, { 'attr':  { 'class': 'form-control-file'}}) }}
+              </div>
+
+              <div class="form-group">
+                {{ form_label(form.content, 'Contenu') }}
+                {{ form_errors(form.content) }}
+                {{ form_widget(form.content, { 'attr':  { 'class': 'form-control', 'rows' : '15', 'resize' : 'none' }}) }}
+              </div>
+
+              {# <div class="form-group">
+                {{ form_label(form.image, 'Image') }}
+                {{ form_errors(form.image) }}
+                {{ form_widget(form.image, { 'attr':  {'class': 'form-control-file'}}) }}
+              </div> #}
+
+            </div>
+            <div class="card-footer">
+
+
+              <div class="form-group">
+                <input class="btn btn-primary" type="submit" value="Enregistrer">
+                <a class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete" data-href="{{ path("moocms_remove_activity", {id: activity.id}) }}">Supprimer l'activité</a>
+                <a class="btn btn-secondary" href="{{ path('moocms_activities') }}" role="button">Quitter</a>
+              </div>
+              {{ form_rest(form) }}
+              {{ form_end(form) }}
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal deletion confirmation -->
+        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                Suppression de la leçon
+              </div>
+              <div class="modal-body">
+                Etes-vous sure de vouloir supprimer l'activité?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                <a class="btn btn-danger btn-ok" href="{{ path("moocms_remove_activity", {id: activity.id}) }}">Supprimer</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      {% endblock %}

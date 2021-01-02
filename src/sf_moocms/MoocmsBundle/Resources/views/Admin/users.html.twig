@@ -1,0 +1,54 @@
+{% extends 'MoocmsBundle::layout.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+  {% block body %}
+
+    <div class="container page-content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-default">
+            <div class="card-header">
+              <h2>Liste des utilisateurs</h2>
+            </div>
+            <div class="card-body">
+              {% if users %}
+                <table class="table table-hover table-striped table-bordered">
+                  <thead align="center">
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Nom d'utilisateur</th>
+                    <th>Adresse mail</th>
+                    <th>Droits</th>
+                    <th>Modifier</th>
+                    {# <th colspan="2">Action</th> #}
+
+                  </thead>
+                  {% for user in users %}
+                    <tr>
+                      <td>{{ user.firstname }}</td>
+                      <td>{{ user.lastname }}</td>
+                      <td>{{ user.username }}</td>
+                      <td>{{ user.email }}</td>
+                      <td>{% for role in user.roles %}
+                        {{ role }},
+                      {% endfor %}</td>
+                      <td align="center"><a title="Modifier" href="{{ path('moocms_edit_user', {'id': user.id}) }}"><i class="fa fa-edit"></i></a></td>
+                    </tr>
+                  {% endfor %}
+                </table>
+              {% else %}
+                <p><b>No activity match...</b></p>
+              {% endif %}
+            </div>
+            <div class="card-footer">
+              <div class="form-group">
+                <a class="btn btn-primary" href="{{ path('moocms_add_user') }}" ><i class="fa fa-plus-square"></i> Ajouter un utlisateur</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  {% endblock %}

@@ -1,0 +1,305 @@
+
+#----Users routes-----
+
+#Affiche les listes de leçons
+moocms_homepage:
+    path:     /
+    defaults: { _controller: MoocmsBundle:Default:lessons }
+
+moocms_lessons_by_category:
+    path:     /{id}/category
+    defaults: { _controller: MoocmsBundle:Default:lessonsCategory }
+    requirements:
+        topic_id: \d+
+
+moocms_preview_lesson:
+    path:     /{id}/preview
+    defaults: { _controller: MoocmsBundle:Default:previewLesson }
+    requirements:
+        id: \d+
+
+moocms_lessons_by_level:
+    path:     /{id}/level
+    defaults: { _controller: MoocmsBundle:Default:lessonLevel }
+    requirements:
+        id: \d+
+
+
+#Affiche les listes de cours
+moocms_courses:
+    path:    /courses
+    defaults: { _controller: MoocmsBundle:Default:courses }
+
+moocms_courses_by_category:
+    path:     /courses/{id}/category
+    defaults: { _controller: MoocmsBundle:Default:coursesCategory }
+    requirements:
+        topic_id: \d+
+
+moocms_preview_course:
+    path:     /course/{id}/preview
+    defaults: { _controller: MoocmsBundle:Default:previewCourse }
+    requirements:
+        id: \d+
+
+
+#Activitiés seules
+moocms_show_activity:
+    path:     /activity/{id}/show
+    defaults: { _controller: MoocmsBundle:Default:activityShow } 
+    requirements:
+        id: \d+
+
+#Activitiés de fin de séquence
+moocms_show_sequence_activity:
+    path:     /lesson/{lid}/sequence/{snum}/activity/{id}
+    defaults: { _controller: MoocmsBundle:Default:sequenceActivityShow }
+    requirements:
+        id: \d+
+
+moocms_show_course_sequence_activity:
+    path:     /course/{cid}/lesson/{lid}/sequence/{snum}/activity/{id}
+    defaults: { _controller: MoocmsBundle:Default:sequenceActivityShow }
+    requirements:
+        id: \d+
+
+
+#Activités de fin de leçon
+moocms_show_lesson_activity:
+    path:     /lesson/{lid}/activity/{id}
+    defaults: { _controller: MoocmsBundle:Default:lessonActivityShow } 
+    requirements:
+        id: \d+
+
+moocms_show_course_lesson_activity:
+    path:     /course/{cid}/lesson/{lid}/activity/{id}/
+    defaults: { _controller: MoocmsBundle:Default:lessonActivityShow } 
+    requirements:
+        id: \d+
+
+
+#Affichage des Tutoriels (leçons)
+moocms_follow_lesson:
+    path:     /lesson/{id}/follow
+    defaults: { _controller: MoocmsBundle:Default:followLesson}
+    requirements:
+        id: \d+
+
+moocms_show_lesson_sequence:
+    path:     /lesson/{id}/sequence/{snum}
+    defaults: { _controller: MoocmsBundle:Default:showLessonSequence }
+    requirements:
+        id: \d+
+
+moocms_finish_lesson:
+    path:     /lesson/{id}/finish
+    defaults: { _controller: MoocmsBundle:Default:finishLesson }
+    requirements:
+        id: \d+
+
+
+#Affichage des formations (cours)
+moocms_follow_course:
+    path:     /course/{id}/follow
+    defaults: { _controller: MoocmsBundle:Default:followCourse }
+    requirements:
+        id: \d+
+
+moocms_follow_course_lesson:
+    path:     /course/{cid}/lesson/{lid}/follow
+    defaults: { _controller: MoocmsBundle:Default:followCourseLesson }
+    requirements:
+        id: \d+
+
+moocms_show_course_lesson_sequence:
+    path:     /course/{cid}/lesson/{lid}/sequence/{snum}/
+    defaults: { _controller: MoocmsBundle:Default:showCourseLessonSeqence }
+    requirements:
+        id: \d+
+
+moocms_finish_course_lesson:
+    path:     /course/{cid}/lesson/{lid}/finish
+    defaults: { _controller: MoocmsBundle:Default:finishCourseLesson }
+    requirements:
+        id: \d+
+
+
+#Others routes
+moocms_forum:
+    path:     /forum
+    defaults: { _controller: MoocmsBundle:Default:forum }
+
+moocms_about:
+    path:     /about
+    defaults: { _controller: MoocmsBundle:Default:about }
+
+moocms_dashboard:
+    path:     /training/dashboard
+    defaults: { _controller: MoocmsBundle:Default:dashboard }
+
+
+#-----Admin routes-----
+
+#Admin topics
+moocms_topics:
+    path:     /admin/topics
+    defaults: { _controller: MoocmsBundle:Admin:topics }
+
+moocms_edit_topic:
+    path:     /admin/topic/{id}/edit
+    defaults: { _controller: MoocmsBundle:Admin:editTopic }
+    requirements:
+        id: \d+
+
+moocms_add_topic:
+    path:     /admin/topic/add
+    defaults: { _controller: MoocmsBundle:Admin:addTopic }
+
+moocms_remove_topic:
+    path:     /admin/topic/{id}/remove
+    defaults: { _controller: MoocmsBundle:Admin:removeTopic }
+    requirements:
+        id: \d+
+
+#Admin categories
+moocms_categories:
+    path:     /admin/categories
+    defaults: { _controller: MoocmsBundle:Admin:categories }
+
+moocms_edit_category:
+    path:     /admin/category/{id}/edit
+    defaults: { _controller: MoocmsBundle:Admin:editCategory }
+    requirements:
+        id: \d+
+
+moocms_add_category:
+    path:     /admin/category/add
+    defaults: { _controller: MoocmsBundle:Admin:addCategory }
+
+moocms_remove_topic:
+    path:     /admin/category/{id}/remove
+    defaults: { _controller: MoocmsBundle:Admin:removeCategory }
+    requirements:
+        id: \d+
+
+
+#Admin courses
+moocms_list_courses:
+    path:     /admin/courses
+    defaults: { _controller: MoocmsBundle:Admin:courses }
+
+moocms_add_course:
+    path:     /admin/course/add
+    defaults: { _controller: MoocmsBundle:Admin:addCourse }
+
+moocms_edit_course:
+    path:     /admin/course/{id}/edit
+    defaults: { _controller: MoocmsBundle:Admin:editCourse }
+    requirements:
+        id: \d+
+
+moocms_remove_course:
+    path:     /admin/course/{id}/remove
+    defaults: { _controller: MoocmsBundle:Admin:removeCourse }
+    requirements:
+        id: \d+
+
+
+#Admin lessons
+moocms_list_lessons:
+    path:     /admin/lessons
+    defaults: { _controller: MoocmsBundle:Admin:lessons }
+
+moocms_edit_lesson:
+    path:     /admin/lesson/{id}/edit
+    defaults: { _controller: MoocmsBundle:Admin:editLesson }
+    requirements:
+        id: \d+
+
+moocms_remove_lesson:
+    path:     /admin/lesson/{id}/remove
+    defaults: { _controller: MoocmsBundle:Admin:removeLesson }
+    requirements:
+        id: \d+
+
+moocms_add_lesson:
+    path:     /admin/lesson/add
+    defaults: { _controller: MoocmsBundle:Admin:addLesson }
+
+moocms_export_lesson:
+    path:   /admin/lesson/{id}/export
+    defaults: { _controller: MoocmsBundle:Admin:exportLesson }
+    requirements:
+        id: \d+
+
+
+#Admin course sequences
+moocms_add_sequence:
+    path:     /admin/sequence/{id}/add
+    defaults: { _controller: MoocmsBundle:Admin:addSequence }
+
+moocms_edit_sequence:
+    path:     /admin/sequence/{id}/edit
+    defaults: { _controller: MoocmsBundle:Admin:editSequence }
+    requirements:
+        id: \d+
+moocms_remove_sequence:
+    path:     /admin/sequence/{id}/remove
+    defaults: { _controller: MoocmsBundle:Admin:removeSequence }
+    requirements:
+        id: \d+
+
+
+#Admin activities
+moocms_activities:
+    path:     /admin/activities
+    defaults: { _controller: MoocmsBundle:Admin:activities }
+
+moocms_add_activity:
+    path:     /admin/activity/add
+    defaults: { _controller: MoocmsBundle:Admin:addActivity }
+
+moocms_sequence_add_activity:
+    path:     /admin/sactivity/{sid}/add
+    defaults: { _controller: MoocmsBundle:Admin:addActivity }
+
+moocms_lesson_add_activity:
+    path:     /admin/lactivity/{lid}/add
+    defaults: { _controller: MoocmsBundle:Admin:addActivity }
+
+moocms_edit_activity:
+    path:     /admin/activity/{id}/edit
+    defaults: { _controller: MoocmsBundle:Admin:editActivity }
+    requirements:
+        id: \d+
+
+moocms_remove_activity:
+    path:     /admin/activity/{id}/remove
+    defaults: { _controller: MoocmsBundle:Admin:removeActivity }
+    requirements:
+        id: \d+
+
+moocms_clesson_remove:
+    path:     /admin/clesson/{id}/remove
+    defaults: { _controller: MoocmsBundle:Admin:removeCourseLesson }
+    requirements:
+        id: \d+
+
+moocms_preview_activity:
+    path:     /admin/activity/{id}/preview
+    defaults: { _controller: MoocmsBundle:Admin:previewActivity }
+    requirements:
+        id: \d+
+
+moocms_users:
+    path:   /admin/users
+    defaults: { _controller: MoocmsBundle:Admin:Users }
+
+moocms_add_user:
+    path:   /admin/users/add
+    defaults: { _controller: MoocmsBundle:Admin:addUser }
+
+moocms_edit_user:
+    path:   /admin/user/{id}/edit
+    defaults: { _controller: MoocmsBundle:Admin:editUser }
+

@@ -1,0 +1,88 @@
+{% extends 'MoocmsBundle::layout.html.twig' %}
+
+{% block title %}Formations{% endblock %}
+
+  {% block body %}
+
+    <div class="container page-content">
+      {# <h1>Les dernières formations</h1> #}
+     <div class="row">
+
+      <div class="col-lg-12">
+
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-tags"></i></button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item" href="{{ path('moocms_courses')}}">Tous</a></li>
+            {% for topic in topics %}
+              <li><a class="dropdown-item" href="{{ path('moocms_courses_by_category',{'id' : topic.id }) }}">{{ topic.name }}</a></li>
+            {% endfor %}
+
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="col-lg-12">
+        <div class="row">
+
+         {% if courses %}
+
+          {% for course in courses %}
+
+            {# {% if course.published == true or course.promote == true %} #}
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="card hcard">
+                {% if course.image and course.image.url %}
+                  <div class="card-img hcard-img">
+                    <img src="{{ '/uploads_img/' ~ course.image.url }}" class="card-img-top" alt="...">                 
+                  </div>
+                {% else %}
+                  <div class="card-img hcard-img">
+                    <img src="{{ 'icon-course.png' }}" class="card-img-top" alt="...">
+                  </div>
+                {% endif %}
+
+                <div class="card-body hcard-body">
+                  <h6 class="card-title hcard-title">{{ course.title }}
+                      {# {% if course.published == false %}
+                        <span class="badge badge-primary">Bientôt</span>
+                      {% endif %} #}
+                    </h6>
+                    <p class="card-text hcard-text">{{ course.summary|truncate(50, true, '...') }}</p>
+                    {# {% if course.published == true %}                      
+                      <a href="{{ path('moocms_preview_course', {'id': course.id}) }}" class="btn btn-default">Aperçu</a>
+                    {% else %} #}                      
+                      <a href="{{ path('moocms_follow_course', {'id': course.id}) }}" class="btn btn-primary">Suivre</a>
+                      <a href="{{ path('moocms_preview_course', {'id': course.id}) }}" class="btn btn-default">Aperçu</a>
+                      {# {% endif %} #}
+                    </div>
+
+                  </div>
+                </div>
+                {# {% endif %} #}
+              {% endfor %}
+
+            {% else %}
+              <div class="col-lg-12">
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Désolé!</strong> Aucune formation trouvée!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </div>
+
+            {% endif %}
+
+          </div>
+        </div>
+
+        
+
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+En ce qui concerne le front-end
+
+Compilation des css et js avec yarn
+se trouvent dans :
+* asset\css 
+* et asset\js etc.
+
+commande yarn install
+  + yarn encore dev 
+  OU yarn encore dev --watch
+  etc.
+
+ Documentation sur Symphony :
+ https://symfony.com/doc/3.4/frontend/encore/simple-example.html
+
+

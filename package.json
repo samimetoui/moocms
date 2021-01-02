@@ -1,0 +1,29 @@
+{
+  "name": "sfmoocms2",
+  "version": "1.0.0",
+  "description": "Symfony Standard Edition ========================",
+  "main": "webpack.config.js",
+  "devDependencies": {
+    "@symfony/webpack-encore": "^0.28.3",
+    "bootstrap": "^4.5.0",
+    "bootstrap4": "^0.0.1-security",
+    "highlightjs": "^9.16.2",
+    "jquery": "^3.5.1",
+    "node-sass": "^4.14.1",
+    "popper.js": "^1.16.1",
+    "sass-loader": "7.0.1",
+    "select2": "^4.0.13",
+    "webpack-notifier": "^1.8.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "int-test": "mocha --require babel-core/register --recursive test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.13.0",
+    "ckeditor": "^4.12.1",
+    "highlight.js": "^10.0.3"
+  }
+}

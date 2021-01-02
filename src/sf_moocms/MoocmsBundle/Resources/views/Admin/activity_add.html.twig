@@ -1,0 +1,87 @@
+{% extends 'MoocmsBundle::layout.html.twig' %}
+
+{% block title %}Ajouter une activité{% endblock %}
+
+  {% block body %}
+
+    <div class="container page-content">
+      <div class="row">
+        <div class="col-md-12">
+
+          {{ form_start(form, {'attr': {'class': 'form-horizontal'} }) }}
+
+          <div class="card card-default">
+            <div class="card-header">
+              <h2>Ajouter une activité</h2>
+            </div>
+            <div class="card-body">
+
+              <div class="form-group">
+                {{ form_label(form.title, 'Intitulé') }}
+                {{ form_errors(form.title) }}
+                {{ form_widget(form.title, { 'attr':  {'class': 'form-control'}}) }}
+              </div>
+
+              <div class="form-group">
+                {{ form_label(form.summary, 'Résumé') }}
+                {{ form_errors(form.summary) }}
+                {{ form_widget(form.summary, { 'attr':  { 'class': 'form-control', 'rows' : '3', 'resize' : 'none' }}) }}
+              </div>
+
+              {# <div class="form-group">
+                <a href="#" id="advClick"><i class="fa fa-plus"></i> Vue avancée</a>
+              </div> #}
+
+              {# <div id="advSlide"> #}
+
+              <div class="form-group">
+                {{ form_label(form.goals, 'Objectifs') }}
+                {{ form_errors(form.goals) }}
+                {{ form_widget(form.goals, { 'attr':  { 'class': 'form-control', 'rows' : '3', 'resize' : 'none' }}) }}
+              </div>
+
+              <div class="form-group">
+                {{ form_label(form.category, 'Catégorie') }}
+                {{ form_errors(form.category) }}
+                {{ form_widget(form.category, { 'attr':  {'class': 'form-control'}}) }}
+              </div>       
+
+              {# </div> #}
+              
+              <div class="form-group">
+                {{ form_label(form.document, 'Document joint') }}
+                {{ form_errors(form.document) }}
+                {{ form_widget(form.document, { 'attr':  { 'class': 'form-control-file'}}) }}
+              </div>
+
+              <div class="form-group">
+                {{ form_label(form.content, 'Contenu') }}
+                {{ form_errors(form.content) }}
+                {{ form_widget(form.content, { 'attr':  { 'class': 'form-control', 'rows' : '15', 'resize' : 'none' }}) }}
+              </div>
+
+              {# <div class="form-group">
+                {{ form_label(form.image, 'Image') }}
+                {{ form_errors(form.image) }}
+                {{ form_widget(form.image, { 'attr':  {'class': 'form-control-file'}}) }}
+              </div> #}
+
+            </div>
+            <div class="card-footer">
+
+              <div class="form-group">
+                <input class="btn btn-primary" type="submit">
+                <a class="btn btn-secondary" href="{{ path('moocms_activities') }}" role="button">Annuler</a>
+              </div>
+
+            </div>
+          </div>
+
+          {{ form_rest(form) }}
+          {{ form_end(form) }}
+
+        </div>
+      </div>
+    </div>
+
+  {% endblock %}

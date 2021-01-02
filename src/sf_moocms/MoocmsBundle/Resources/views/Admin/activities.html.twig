@@ -1,0 +1,54 @@
+{% extends 'MoocmsBundle::layout.html.twig' %}
+
+{% block title %}Liste des activités{% endblock %}
+
+  {% block body %}
+
+    <div class="container page-content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-default">
+            <div class="card-header">
+              <h2>Liste des activités</h2>
+            </div>
+            <div class="card-body">
+              {% if activities %}
+                <table class="table table-hover table-striped table-bordered">
+                  <thead align="center">
+                    <th>Intitulé</th>
+                    <th>Résumé</th>
+                    <th>Formateur</th>
+                    <th colspan="2">Action</th>
+
+                  </thead>
+                  {% for activity in activities %}
+                    <tr>
+
+                      <td>{{ activity.title }}</td>
+                      <td>{{ activity.summary|truncate(50, true, '...') }}</td>
+                      <td>{{ activity.user.firstname|truncate(1,false,'.') ~ ' ' ~ activity.user.lastname }}</td>
+                  {# <td align="center">{{ activity.promote == true ? '<i class="fa fa-bullhorn"></i>' : '<i class="fa fa-ban"></i>' }}</td>
+                  <td align="center">{{ activity.published == true ? '<i class="fa fa-check"></i>' : '<i class="fa fa-cogs"></i>' }}</td> #}
+
+                  {# <td align="center"><a title="Aperçu" href="{{ path('moocms_preview_activity', {'id': activity.id}) }}"><i class="fa fa-eye"></i></a></td> #}
+                  <td align="center"><a title="Modifier" href="{{ path('moocms_edit_activity', {'id': activity.id}) }}"><i class="fa fa-edit"></i></a></td>
+                  <td align="center"><a title="Démarrer" href="{{ path('moocms_show_activity', {'id': activity.id}) }}"><i class="fa fa-play-circle"></i></a></td>
+                </tr>
+              {% endfor %}
+            </table>
+          {% else %}
+            <p><b>No activity match...</b></p>
+          {% endif %}
+        </div>
+        <div class="card-footer">
+
+          <div class="form-group">
+            <a class="btn btn-primary" href="{{ path('moocms_add_activity') }}" ><i class="fa fa-plus-square"></i> Ajouter une activité</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

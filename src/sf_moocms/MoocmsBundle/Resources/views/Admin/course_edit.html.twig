@@ -1,0 +1,178 @@
+{% extends 'MoocmsBundle::layout.html.twig' %}
+
+{% block title %}Modifier la formation{% endblock %}
+
+  {% block body %}
+
+    <div class="container page-content">
+      <div class="row">
+        <div class="col-md-12">
+
+          {{ form_start(form, {'attr': {'class': 'form-horizontal', 'name': 'course-form'} }) }}
+
+          <div class="card card-default">
+            <div class="card-header">
+              <h2>Modifier la formation</h2>
+            </div>
+            <div class="card-body">              
+
+              <div class="col-md-2">
+                {% if course.image != null  and course.image.url != null %}
+
+                  <img src="{{ '/uploads_img/' ~ course.image.url }}" class="card-img-top">
+
+                {% endif %}
+              </div>
+
+              <div class="col-md-12">
+
+                <div class="form-group">
+                  {{ form_label(form.image, 'Image') }}            
+                  {{ form_errors(form.image) }}
+                  {{ form_widget(form.image, { 'attr':  {'class': 'form-control-file'}}) }} 
+                </div>
+
+                <div class="form-group">
+                  {{ form_label(form.title, 'Intitulé') }}            
+                  {{ form_errors(form.title) }}
+                  {{ form_widget(form.title, { 'attr':  {'class': 'form-control'}}) }} 
+                </div>
+
+                <div class="form-group">
+                  {{ form_label(form.summary, 'Finalité') }}
+                  {{ form_errors(form.summary) }}
+                  {{ form_widget(form.summary, { 'attr':  { 'class': 'form-control', 'rows' : '3', 'resize' : 'none' }}) }}
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  {{ form_label(form.topic, 'Discipline') }}            
+                  {{ form_errors(form.topic) }}
+                  {{ form_widget(form.topic, { 'attr':  {'class': 'form-control'}}) }} 
+                </div>
+              </div>
+
+              <div class="col-md-12">
+
+                <div class="form-group">
+                  <a href="#" id="advClick"><i class="fa fa-plus"></i> Vue avancée</a>
+                </div>
+
+                <div id="advSlide">
+
+                  <div class="form-group">
+                    {{ form_label(form.prerequiste, 'Prérequis') }}            
+                    {{ form_errors(form.prerequiste) }}
+                    {{ form_widget(form.prerequiste, { 'attr':  { 'class': 'form-control', 'rows' : '3', 'resize' : 'none' }}) }}
+                  </div>
+
+                  <div class="form-group">
+                    {{ form_label(form.goals, 'Objectifs') }}            
+                    {{ form_errors(form.goals) }}
+                    {{ form_widget(form.goals, { 'attr':  { 'class': 'form-control', 'rows' : '3', 'resize' : 'none' }}) }}
+                  </div>
+                </div>
+
+                  {# {% if is_granted("ROLE_SUPER_ADMIN") %}
+
+                    <div class="form-check">           
+                      {{ form_errors(form.promote) }}
+                      {{ form_widget(form.promote, { 'attr':  { 'class': 'form-check-input' }}) }}
+                      {{ form_label(form.promote, 'Promouvoir', { 'attr':  { 'class': 'form-check-label' }}) }} 
+                    </div>
+
+                    <div class="form-check">           
+                      {{ form_errors(form.published) }}
+                      {{ form_widget(form.published, { 'attr':  { 'class': 'form-check-input' }}) }}
+                      {{ form_label(form.published, 'Publier', { 'attr':  { 'class': 'form-check-label' }}) }} 
+                    </div>
+
+                  {% endif %} #}
+
+                </div>
+                <div class="col-md-12">
+
+                  {% if courseLessons %}
+                    <table class="table table-hover table-sm table-bordered">
+                      <thead align="center">
+                        <th>#</th>
+                        <th>Titre</th>
+                        <th>Résume</th>
+                        <th>Supprimer</th>
+                      </thead>
+                      {% for clesson in courseLessons %}
+                        <tr>
+                          <td>{{ clesson.position }}</td>
+                          <td>{{ clesson.lesson.name }}</td>
+                          <td>{{ clesson.lesson.summary|truncate(50, true, '...') }}</td>
+                          <td align="center"><a href="{{ path('moocms_clesson_remove', {'id': clesson.id}) }}"><i class="fa fa-remove"></i></a></td>
+                        </tr>
+
+                      {% endfor %}
+                    </table>
+
+                  {% else %}
+                    <div class="alert alert-danger">Pas de leçons trouvées...</div>
+                  {% endif %}
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <select class="form-control" name="lesson_id" id="less_list">
+                      {% for lesson in lessons %}
+                        <option value="{{ lesson.id }}">{{ lesson.name }}</option>
+                      {% endfor %}
+                    </select>
+
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">            
+                    <button class="btn btn-default" type="submit" value="submit" name="add_lesson" id="btn_add_lesson"><i class="fa fa-plus"></i></button>
+                  </div>
+                </div>
+
+              </div>
+              <div class="card-footer">
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <input class="btn btn-primary" type="submit" value="Enregistrer">
+                    <a class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete" data-href="{{ path("moocms_remove_course", {id: course.id}) }}">Supprimer</a>
+                    <a class="btn btn-secondary" href="{{ path('moocms_list_courses') }}" role="button">Quitter</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+              {{ form_rest(form) }}
+              {{ form_end(form) }} 
+
+
+
+              <!-- Modal deletion confirmation -->
+              <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      Suppression de le cours
+                    </div>
+                    <div class="modal-body">
+                      Etes-vous sure de vouloir supprimer le cours?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                      <a class="btn btn-danger btn-ok" href="{{ path("moocms_remove_course", {id: course.id}) }}">Supprimer</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+    {% endblock %}

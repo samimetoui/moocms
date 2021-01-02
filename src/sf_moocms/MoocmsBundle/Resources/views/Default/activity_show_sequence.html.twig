@@ -1,0 +1,97 @@
+{% extends 'MoocmsBundle::layout.html.twig' %}
+
+{% block title %}Voir l'activité{% endblock %}
+
+  {% block body %}
+
+   <div class="container page-content">
+    <div class="row">
+
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header __main_title">
+            <h1>Activité pédagogique : {{ activity.title }}</h1>
+          </div>
+          <div class="card-body">
+            <h1 class="__title">Finalité :</h1>    
+            
+            <p class="card-text"> {{ activity.summary }}</p>
+
+            <h2 class="__sub-title">Objectifs :</h2>
+            <p class="card-text"> {{ activity.goals | nl2br }}</p>
+
+            {# <h2 class="__sub-title">Catégorie :</h2> #}
+            {# <p class="card-text"> {{ activity.category }}</p> #}
+
+            <h1 class="__title">{{ activity.title }} :</strong></h1>
+            <div class="form-group sequence"> {{ activity.content | raw }}</div>
+
+            {% if activity.document != null  and activity.document.url != null %}
+
+              <i class="fa fa-file"></i> {{ activity.document.alt }}
+              <a class="btn btn-default" target="_blank" href="/uploads_doc/{{ activity.document.url }}"><i class="fa fa-eye"></i></a>
+
+            {% endif %}        
+
+          </div>
+
+          {% if snum != null %}
+            {% if cid != null %}
+              {% if snum == nbSeq %}
+
+                <div class="col-md-10">
+                  <div class="form-group">
+                    <a class="btn btn-primary" role="button" href="{{ path('moocms_show_course_lesson_sequence',{'cid' : cid  , 'lid' : lid  , 'snum' : snum }) }}">Terminer</a>
+                  </div>        
+                </div>
+
+              {% else %}
+
+                <div class="col-md-10">
+                  <div class="form-group">
+                    <a class="btn btn-primary" role="button" href="{{ path('moocms_show_course_lesson_sequence', {'cid' : cid  , 'lid' : lid  , 'snum' : snum + 1 }) }}">Continuer</a>
+                  </div>        
+                </div>
+
+              {% endif %}
+
+            {% else %}
+
+              {% if snum == nbSeq %}
+
+                <div class="col-md-10">
+                  <div class="form-group">
+                    <a class="btn btn-primary" role="button" href="{{ path('moocms_show_lesson_sequence', {'id' : lid  , 'snum' : snum }) }}">Terminer</a>
+                  </div>        
+                </div>
+
+              {% else %}
+
+                <div class="col-md-10">
+                  <div class="form-group">
+                    <a class="btn btn-primary" role="button" href="{{ path('moocms_show_lesson_sequence', {'id' : lid  , 'snum' : snum + 1 }) }}">Continuer</a>
+                  </div>        
+                </div>
+
+              {% endif %}
+
+            {% endif %}
+
+          {% else %}
+
+            <div class="col-md-10">
+              <div class="form-group">
+                <a class="btn btn-primary" role="button" href="{{ path('moocms_activities') }}">Terminer</a>
+              </div>        
+            </div>
+
+          {% endif %}
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}

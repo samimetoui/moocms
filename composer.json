@@ -1,0 +1,95 @@
+{
+    "name": "symfony/framework-standard-edition",
+    "license": "MIT",
+    "type": "project",
+    "description": "The \"Symfony Standard Edition\" distribution",
+    "autoload": {
+        "psr-4": {
+            "AppBundle\\": "src/AppBundle",
+            "sf_moocms\\MoocmsBundle\\": "src/sf_moocms/MoocmsBundle",
+            "sf_moocms\\UserBundle\\": "src/sf_moocms/UserBundle",
+            "Application\\": "src/Application"
+        },
+        "files": ["app/AppKernel.php"]
+    },
+    "autoload-dev": {
+        "files": [ "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php" ]
+    },
+    "require": {
+        "php": ">=7.1.8",        
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/orm": "^2.4.8",
+        "sensio/distribution-bundle": "^5.0",
+        "sensio/framework-extra-bundle": "^5.3",
+
+        "symfony/monolog-bundle": "^3.3",
+
+        "symfony/swiftmailer-bundle": "^3.2",        
+        "symfony/symfony": "3.4.*",
+        "twig/twig": "^2.7",        
+        
+        "twig/extensions": "^1.5",        
+        "paragonie/random_compat": "^2.0.9",
+        "friendsofsymfony/user-bundle": "2.0.*",
+        
+        "sonata-project/admin-bundle": "^3.48",
+        "sonata-project/doctrine-orm-admin-bundle": "^3.9",
+        "sonata-project/media-bundle": "^3.19",
+        "tilleuls/ckeditor-sonata-media-bundle": "^1.0",
+        "friendsofsymfony/ckeditor-bundle": "^2.1",
+        "knplabs/knp-paginator-bundle": "^4.0",
+        "fzaninotto/faker": "^1.8",
+        "symfony/webpack-encore-bundle": "^1.7",
+        "symfony/asset": "^3.4",
+        "symfony/assetic-bundle": "^2.8",
+        "symfony/webpack-encore-pack": "^1.0",
+        "symfony/flex": "^1.6"
+
+    },
+
+    "scripts": {
+        "symfony-scripts": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+        ],
+        "post-install-cmd": [
+            "@symfony-scripts"
+        ],
+        "post-update-cmd": [
+            "@symfony-scripts"
+        ],
+        "auto-scripts": {
+            "security-checker security:check": "script"
+        }
+    },
+
+    "config": {
+       "bin-dir": "bin"
+   },
+
+    "extra": {
+        "symfony-app-dir": "app",
+        "symfony-web-dir": "web",
+        "symfony-var-dir": "var",
+        "symfony-bin-dir": "bin",
+        "symfony-assets-install": "relative",
+
+        "incenteev-parameters": {
+            "file": "app/config/parameters.yml"
+        },
+        "branch-alias": {
+            "dev-master": "2.7-dev"
+        },
+        "ckeditor-path": "/var/www/html/web/ckeditor"
+    },
+    "require-dev": {
+        "sensio/generator-bundle": "^3.0",
+        "symfony/phpunit-bridge": "^4.2",
+        "phpunit/phpunit": "^7.5",
+        "doctrine/doctrine-fixtures-bundle": "^2.3"
+    }
+}

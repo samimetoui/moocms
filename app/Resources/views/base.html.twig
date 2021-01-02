@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+
+    <title>{% block title %}Welcome!{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    {# <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}"> #}
+    {# <link rel="stylesheet" type="text/css" href="{{ asset('font-awesome/css/font-awesome.css') }}">  #}
+
+    {% block stylesheets %}{% endblock %}
+
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />        
+         <script type="text/javascript">
+      var onloadCallback = function() {
+        grecaptcha.render('GoogleReCaptcha', {
+          'sitekey' : '6LfgWMsZAAAAAJpPqsYeNQ3wovntsBsn6lgjlDXF'
+        })
+      };
+    </script>
+    </head>
+
+    <body>
+
+        {% block body %}{% endblock %}           
+
+
+        {% block javascripts %}
+            
+        {% endblock %}
+
+    </body>
+
+</html>

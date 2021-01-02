@@ -1,0 +1,128 @@
+{% extends 'MoocmsBundle::layout.html.twig' %}
+
+{% block title %}Ajouter un tutoriel{% endblock %}
+
+  {% block body %}
+
+    <div class="container page-content">      
+      <div class="row">
+        <div class="col-md-12">
+
+          {{ form_start(form, {'attr': {'class': 'form-horizontal'} }) }}
+
+          <div class="card card-default">
+            <div class="card-header">
+              <h2>Ajouter un tutoriel</h2>
+            </div>
+            <div class="card-body">             
+
+              <div class="form-group">
+                {{ form_label(form.image, 'Image') }}            
+                {{ form_errors(form.image) }}
+                {{ form_widget(form.image, { 'attr':  {'class': 'form-control-file'}}) }} 
+              </div>
+
+              <div class="form-group">
+                {{ form_label(form.name, 'Intitulé') }}            
+                {{ form_errors(form.name) }}
+                {{ form_widget(form.name, { 'attr':  {'class': 'form-control'}}) }} 
+              </div>
+
+              <div class="form-group">
+                  {{ form_label(form.level, 'Niveau') }}            
+                  {{ form_errors(form.level) }}
+                  {{ form_widget(form.level, { 'attr':  {'class': 'form-control'}}) }} 
+                </div>
+
+              <div class="form-group">
+                {{ form_label(form.summary, 'Finalité') }}            
+                {{ form_errors(form.summary) }}
+                {{ form_widget(form.summary, { 'attr':  { 'class': 'form-control', 'rows' : '3', 'resize' : 'none' }}) }}
+              </div>
+
+              <div class="form-group">
+                {{ form_label(form.topic, 'Discipline') }}            
+                {{ form_errors(form.topic) }}
+                {{ form_widget(form.topic, { 'attr':  {'class': 'form-control'}}) }} 
+              </div>
+
+              <dig class="form-group">
+                {{ form_label(form.categories, 'Catégories') }}
+                {{ form_errors(form.categories) }}
+                {{ form_widget(form.categories, { 'attr':  {'class': 'form-control select2'}}) }}
+              </dig>
+
+              {% if is_granted("ROLE_SUPER_ADMIN") %}
+
+                <div class="form-check">           
+                  {{ form_errors(form.promote) }}
+                  {{ form_widget(form.promote, { 'attr':  { 'class': 'form-check-input' }}) }}
+                  {{ form_label(form.promote, 'Promouvoir', { 'attr':  { 'class': 'form-check-label' }}) }} 
+                </div>
+
+                <div class="form-check">           
+                  {{ form_errors(form.published) }}
+                  {{ form_widget(form.published, { 'attr':  { 'class': 'form-check-input' }}) }}
+                  {{ form_label(form.published, 'Publier', { 'attr':  { 'class': 'form-check-label' }}) }} 
+                </div>
+
+              {% endif %}
+
+              <div class="form-group">
+                <a href="#" id="advClick"><i class="fa fa-plus"></i> Vue avancée</a>
+              </div>
+
+              <div id="advSlide">
+
+                <div class="form-group">
+                  {{ form_label(form.prerequisite, 'Prérequis') }}            
+                  {{ form_errors(form.prerequisite) }}
+                  {{ form_widget(form.prerequisite, { 'attr':  { 'class': 'form-control', 'rows' : '3', 'resize' : 'none' }}) }}
+                </div>
+
+                <div class="form-group">
+                  {{ form_label(form.goals, 'Objectifs') }}            
+                  {{ form_errors(form.goals) }}
+                  {{ form_widget(form.goals, { 'attr':  { 'class': 'form-control', 'rows' : '3', 'resize' : 'none' }}) }}
+                </div>
+
+                <div class="form-group">
+                  {{ form_label(form.behaviours, 'Objectifs comportementaux') }}            
+                  {{ form_errors(form.behaviours) }}
+                  {{ form_widget(form.behaviours, { 'attr':  { 'class': 'form-control', 'rows' : '3', 'resize' : 'none' }}) }}
+                </div>
+
+                <div class="form-group">
+                  {{ form_label(form.purposes, 'Finalités') }}            
+                  {{ form_errors(form.purposes) }}
+                  {{ form_widget(form.purposes, { 'attr':  { 'class': 'form-control', 'rows' : '3', 'resize' : 'none' }}) }}
+                </div>
+              </div>
+
+              <div class="form-group">
+                {{ form_label(form.activity, "Choix d'une activité pédagogique") }}            
+                {{ form_errors(form.activity) }}
+                {{ form_widget(form.activity, { 'attr':  {'class': 'form-control'}}) }} 
+              </div>
+
+             {#  <div class="form-group">
+                <a class="btn btn-primary" href="{{ path('moocms_lesson_add_activity', {'sid' : id} ) }}"><i class="fa fa-plus-square"></i> Ajouter une nouvelle activité</a>
+              </div> #}
+              
+            </div>
+            <div class="card-footer">
+              <div class="form-group">
+                <input class="btn btn-primary" type="submit" value="Ajouter">
+                <a class="btn btn-secondary" href="{{ path('moocms_list_lessons') }}" role="button">Annuler</a>
+              </div>
+            </div>
+          </div>
+          
+          {{ form_rest(form) }}
+          {{ form_end(form) }} {# do not render activity field , {'render_rest': false} #}
+          
+        </div>
+      </div>
+    </div>
+
+  {% endblock %}

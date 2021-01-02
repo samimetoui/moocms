@@ -1,0 +1,148 @@
+{% extends 'MoocmsBundle::layout.html.twig' %}
+
+{% block title %}Editer la séquence{% endblock %}
+
+  {% block body %}
+
+    <div class="container page-content">      
+      <div class="row">
+        <div class="col-md-12">
+
+          {# <form action="{{ path("moocms_edit_sequence", { id: id }) }}" method="post"> #}
+          {{ form_start(form, {'attr': {'class': 'form-horizontal'} }) }}
+
+            <div class="card card-default">
+              <div class="card-header">
+                <h2>Editer la séquence</h2>
+              </div>
+              <div class="card-body">
+
+            <div class="form-group">
+              {{ form_label(form.number, 'Numéro de séquence') }}            
+              {{ form_errors(form.number) }}
+              {{ form_widget(form.number, { 'attr':  {'class': 'form-control'}}) }} 
+            </div>
+
+            <div class="form-group">
+              {{ form_label(form.title, 'Intitulé') }}            
+              {{ form_errors(form.title) }}
+              {{ form_widget(form.title, { 'attr':  {'class': 'form-control'}}) }} 
+            </div>
+
+            <div class="form-group">
+              {{ form_label(form.summary, 'Finalité') }}            
+              {{ form_errors(form.summary) }}
+              {{ form_widget(form.summary, { 'attr':  { 'class': 'form-control', 'rows' : '3', 'resize' : 'none' }}) }}
+            </div>
+
+            <div class="form-group">
+              <a href="#" id="advClick"><i class="fa fa-plus"></i> Vue avancée</a>
+            </div>
+
+            <div id="advSlide" >
+
+              <div class="form-group">
+                {{ form_label(form.goals, 'Objectifs') }}            
+                {{ form_errors(form.goals) }}
+                {{ form_widget(form.goals, { 'attr':  { 'class': 'form-control', 'rows' : '3', 'resize' : 'none' }}) }}
+              </div>
+
+              <div class="form-group">
+                {{ form_label(form.pedagogical_method, 'Méthode pédagogique') }}  
+                {{ form_errors(form.pedagogical_method) }}
+                {{ form_widget(form.pedagogical_method, { 'attr':  { 'class': 'form-control', 'rows': '75' }}) }}
+              </div>          
+
+              <div class="form-group">
+                {{ form_label(form.method_description, 'Description de la méthode') }}            
+                {{ form_errors(form.method_description) }}
+                {{ form_widget(form.method_description, { 'attr':  { 'class': 'form-control', 'rows' : '5', 'resize' : 'none' }}) }}
+              </div>
+
+            </div>
+
+            <div class="form-group">
+              {{ form_label(form.activity, "Choix de l'activité pédagogique (Synthèse de la séquence)") }}       
+              {{ form_errors(form.activity) }}
+              {{ form_widget(form.activity, { 'attr':  {'class': 'form-control'}}) }} 
+            </div>
+
+            <div class="form-group">
+              <a class="btn btn-primary" href="{{ path('moocms_sequence_add_activity', {'sid' : id} ) }}"><i class="fa fa-plus-square"></i> Ajouter une nouvelle activité</a>
+            </div>
+
+            <div class="form-group">
+              {{ form_label(form.content, 'Contenu') }}            
+              {{ form_errors(form.content) }}
+              {{ form_widget(form.content, { 'attr':  { 'class': 'form-control', 'rows' : '15', 'resize' : 'none' }}) }}
+            </div>
+
+            </div>
+              <div class="card-footer">
+
+            <div class="form-group">
+              <input class="btn btn-primary" type="submit" value="Enregistrer">
+              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#apercuModal">Apercu</button>
+              <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete" data-href="{{ path('moocms_remove_sequence', { id: sequence.id }) }}">Supprimer la séquence</a>
+              <a class="btn btn-secondary" href="{{ path('moocms_edit_lesson', { id: sequence.lesson.id }) }}" role="button">Quitter</a>
+            </div>
+          </div>
+        </div>
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+
+          <!-- Modal Apercu du cours -->
+          <div class="modal fade " id="apercuModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-preview modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Apercu de la séquence</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="card card-default">
+                    <div class="card-header __main_title">
+                      <h3>{{ sequence.title }}</h3>
+                    </div>
+                    <div class="card-body">
+                      <h1 class="__title">Objectif de la séquence</h1>
+                      <p>{{ sequence.summary | nl2br }}</p>
+                      <h1 class="__title">{{ sequence.title }}</h1>
+                      <div class="form-group sequence">
+                        {{ sequence.content | raw }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal deletion confirmation -->
+    <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            Suppression de la séquence de cours
+          </div>
+          <div class="modal-body">
+            Etes-vous sure de vouloir supprimer la séquence de cours?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+            <a class="btn btn-danger btn-ok" href="{{ path('moocms_remove_sequence', { id: sequence.id }) }}">Supprimer</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  {% endblock %}
